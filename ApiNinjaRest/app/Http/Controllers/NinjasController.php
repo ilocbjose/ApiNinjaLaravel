@@ -102,12 +102,39 @@ class NinjasController extends Controller
     public function update(Request $request, $id)
     {
        
-        $ninja = Ninja::where('id',$id)->update([
-            "estado" => $request->estado
-        ]);
+       $ninja = Ninja::find($id);
 
+       $data = $request->getContent();
+
+            //Verificar que hay datos
+            $data = json_decode($data);
+
+            if($data){
+
+                //TODO: validar los datos introducidos
+
+                if(isset($data->nombre)){
+
+                    $ninja->nombre = $data->nombre;
+                }
+                if(isset($data->fecha_registro)){
+
+                    $ninja->fecha_registro = $data->fecha_registro;
+                }
+                if(isset($data->rango)){
+
+                    $ninja->rango = $data->rango;
+                }
+                if(isset($data->estado)){
+
+                    $ninja->estado = $data->estado;
+                }
+                if(isset($data->informe_habilidades)){
+
+                    $ninja->informe_habilidades = $data->informe_habilidades;
+                }
         return $respuesta = "Datos modificados";
-
+            }
     }
 
     /**

@@ -98,7 +98,7 @@ class MisionesController extends Controller
 
         if($id=="*"){
 
-            $this->respuesta = DB::table('misions')->orderBy('urgente','desc')->get();
+            $this->respuesta = DB::table('misions')->orderBy('urgente','asc')->get();
 
         } elseif($id=="&"){
 
