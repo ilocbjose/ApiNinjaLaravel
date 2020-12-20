@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NinjasController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\MisionesController;
+use App\Http\Controllers\TrabajosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::apiResource("ninjas",NinjasController::class);
 Route::apiResource("clientes",ClientesController::class);
 
 Route::apiResource("misiones",MisionesController::class);
+
