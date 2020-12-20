@@ -18,11 +18,10 @@ class CreateMisionsTable extends Migration
 
             $table->string('id_cliente', 100);
             $table->string('recompensa', 400);
-            $table->integer('ninjas_estimados')->default(0)->unsigned();
+            $table->integer('ninjas_estimados')->default(1)->unsigned();
             $table->string('pago', 400);
             $table->enum('estado', ['pendiente', 'en proceso', 'realizada', 'fallida'])->default('pendiente');
             $table->boolean('urgente')->default(false);
-            $table->date('fecha_finalizacion')->default(0)->unsigned();
 
             $table->timestamps();
         });

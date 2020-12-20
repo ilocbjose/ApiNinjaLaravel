@@ -67,7 +67,7 @@ class NinjasController extends Controller
 
             $this->respuesta = DB::table('ninjas')->get();
 
-        } else if($id=="muerto"||$id=="activo"||$id=="herido"||$id==""){
+        } else if($id=="muerto"||$id=="activo"||$id=="herido"||$id=="desertor"){
 
             $this->respuesta = Ninja::where('estado',$id)->get();
 

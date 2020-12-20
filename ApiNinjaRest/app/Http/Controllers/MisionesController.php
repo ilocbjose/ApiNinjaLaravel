@@ -10,6 +10,8 @@ use App\Models\Mision;
 use App\Models\Ninja;
 use App\Models\Cliente;
 
+use Illuminate\Support\Facades\Schema;
+
 class MisionesController extends Controller
 {
     
@@ -44,31 +46,47 @@ class MisionesController extends Controller
 
     	$mision = new Mision();
 
-    	$mision->id_cliente = $request->cliente;
+    	$clientes = Cliente::all();
 
-    	$mision->recompensa = $request->recompensa;
+    	foreach ($clientes as $cliente) {
+    		
+    		if($cliente->codigo == $request->cliente){
 
-    	if($request->ninjas_estimados)
+    			$mision->id_cliente = $request->cliente;
+    			$mision->recompensa = $request->recompensa;
 
-    		$mision->ninjas_estimados = $request->ninjas_estimados;
+		    	if($request->ninjas_estimados)
 
-    			
+		    		$mision->ninjas_estimados = $request->ninjas_estimados;
+	
 
-    	$mision->pago = $request->pago;
+		    	$mision->pago = $request->pago;
 
-    	if($request->estado)
+		    	if($request->estado)
 
-    		$mision->estado = $request->estado;
+		    		$mision->estado = $request->estado;
 
-    			
+		    			
 
-    	if($request->urgente)
+		    	if($request->urgente)
 
-    		$mision->urgente = $request->urgente;
+		    		$mision->urgente = $request->urgente;
 
-    			
+		    			
 
-    	$mision->save();
+		    	$mision->save();
+
+    		}else{
+
+    			return "Datos incorrectos";
+
+    		}
+
+    	}
+
+    	
+
+    	
 
 
     }
@@ -139,19 +157,57 @@ class MisionesController extends Controller
 
 				//TODO: validar los datos introducidos
 
-				if(isset($data->cliente))
-					$mision->id_cliente = $data->cliente;
-				if(isset($data->recompensa))
-					$mision->recompensa = $data->recompensa;
-                if(isset($data->ninjas_estimados))
-                    $mision->ninja_estimados = $data->ninja_estimados;
-                if(isset($data->pago))
-                    $mision->pago = $data->pago;
-                if(isset($data->estado))
-                	$mision->estado = $data->estado;
-                if(isset($data->urgente))
-                	$mision->urgente = $data->urgente;
+				if(isset($data->cliente)){
 
+					$mision->id_cliente = $data->cliente;
+				}
+				if(isset($data->recompensa)){
+
+					$mision->recompensa = $data->recompensa;
+				}
+                if(isset($data->ninjas_estimados)){
+
+                    $mision->ninjas_estimados = $data->ninjas_estimados;
+                }
+                if(isset($data->pago)){
+
+                    $mision->pago = $data->pago;
+                }
+                if(isset($data->urgente)){
+
+                	$mision->urgente = $data->urgente;
+                }
+
+                if(isset($data->estado)){
+
+                	if(($data->estado) == "realizada"){
+
+                		$mensajeEnhorabuena =  $data->estado;
+                		$mision->estado = $mensajeEnhorabuena;
+
+                	}else{
+
+                		$mision->estado = $data->estado;
+
+                	}
+               
+                }
+
+
+                if(isset($data->ninjas_estimados)){
+
+                	$datosNuevos = $data->ninjas_estimados;
+
+                	if($datosNuevos>="2"){
+
+                		$mision->estado = "en proceso";
+
+                	}
+
+                }
+                
+               
+                
 				//Guardar la mision
 				try{
 
